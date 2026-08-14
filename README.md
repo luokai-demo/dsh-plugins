@@ -1,5 +1,7 @@
 # dsh-plugins
 
+English | [中文](README.zh.md)
+
 Community plugin collection for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
 
 Every plugin here is a standalone bundle: installable with `dsh plugin add`, published independently to npm, and discoverable through the [`dsh-plugin`](https://github.com/topics/dsh-plugin) topic. Each plugin lives in its own directory under `plugins/` with its own version and release cycle.
