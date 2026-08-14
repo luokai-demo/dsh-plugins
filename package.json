@@ -1,0 +1,12 @@
+{
+  "name": "dsh-plugins",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Community plugin collection for DeepSeek Harness",
+  "type": "module",
+  "scripts": {
+    "build": "pnpm -r run build",
+    "test": "pnpm -r run test"
+  },
+  "license": "MIT"
+}

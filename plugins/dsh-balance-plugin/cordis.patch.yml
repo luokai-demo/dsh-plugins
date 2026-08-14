@@ -1,0 +1,3 @@
+- insert:
+    - id: balance
+      name: dsh-balance-plugin
