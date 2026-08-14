@@ -38,22 +38,59 @@ pnpm run build        # build every plugin
 pnpm test             # test every plugin
 ```
 
-To add a new plugin: copy `plugins/dsh-balance-plugin` as a template, keep the bundle manifest shape (`dsh.bundle` + `cordis.patch.yml`), and verify locally before publishing:
+## Adding a new plugin
+
+1. Copy `plugins/dsh-balance-plugin` as a template (`cp -R plugins/dsh-balance-plugin plugins/<plugin-name>`).
+2. Rename in `plugins/<plugin-name>/package.json`: `name`, `description`, `version` (start at `0.1.0`), `repository` URL, `keywords`. Keep the bundle manifest shape (`dsh.bundle` + `cordis.patch.yml`) and the `dsh.client` block for UI plugins.
+3. Write your host half (`src/index.ts`), browser half (`src/client.tsx` if any), and pure logic (`src/balance-core.ts` equivalent); keep the per-request pattern for optional services.
+4. Write `tests/` (node:test, no framework) and the bilingual README (features, install, config, FAQ, release checklist).
+5. Verify locally before publishing:
 
 ```sh
+pnpm install
+pnpm run build && pnpm test
 dsh plugin --profile demo add ./plugins/<plugin-name>
 dsh --profile demo --dump-config     # expect a "# == <plugin-name>" layer
 ```
 
-## Publishing
+6. Add a row to the [Plugins](#plugins) table in this README.
+7. Commit and push.
 
-Each plugin publishes independently (see its `PUBLISHING.md`):
+## Publishing a plugin
 
-1. `pnpm run build && pnpm test` inside the plugin;
-2. `npm version <patch|minor|major>` (bumps and tags);
-3. `pnpm pack` and inspect the tarball;
-4. `npm publish` (prebuilt code — zero-friction installs);
-5. Push the tag; keep the GitHub release in sync.
+Each plugin publishes independently, with its own version and release. Two channels are supported (see the plugin's `PUBLISHING.md` for the manual):
+
+### Channel A: GitHub Release tarball (no npm account needed)
+
+```sh
+cd plugins/<plugin-name>
+pnpm pack                                    # produces <plugin-name>-<version>.tgz
+cd ../..
+gh release create v<version> \
+  --title "<plugin-name> <version>" \
+  --notes "..." \
+  plugins/<plugin-name>/<plugin-name>-<version>.tgz
+git push --tags
+```
+
+Users install from the Release page:
+
+```sh
+dsh plugin --profile <name> add ./<plugin-name>-<version>.tgz
+```
+
+### Channel B: npm (optional; requires an npm account)
+
+```sh
+cd plugins/<plugin-name>
+pnpm run build && pnpm test
+npm version <patch|minor|major>   # bumps and tags
+pnpm pack                          # inspect the tarball (lib/, cordis.patch.yml, README, LICENSE only)
+npm publish                        # prebuilt code — users install with `dsh plugin add <name>`
+git push && git push --tags
+```
+
+Keep the npm version and the GitHub tag in sync. Note: because plugins live in subdirectories, `dsh plugin add github:<owner>/<repo>#<sha>` cannot target them — use Channel A or B.
 
 ## License
 
