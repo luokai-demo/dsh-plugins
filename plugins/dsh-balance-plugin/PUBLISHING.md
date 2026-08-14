@@ -15,7 +15,7 @@ Step-by-step release manual for the two official distribution channels (both are
 
 ```sh
 cd ~/Documents/dsh-balance-plugin
-git remote add origin git@github.com:<you>/dsh-balance-plugin.git
+git remote add origin git@github.com:luokai-demo/dsh-plugins.git
 git push -u origin main
 ```
 
