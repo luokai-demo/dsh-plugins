@@ -14,7 +14,8 @@
 
 ```sh
 dsh plugin --profile <名字> add <插件名>            # 从 npm（推荐）
-dsh plugin --profile <名字> add ./<插件名>-<版本>.tgz  # 从 Release tarball
+# 或：从 Releases 页面下载 <插件名>-<版本>.tgz，然后
+dsh plugin --profile <名字> add ./<插件名>-<版本>.tgz
 ```
 
 每个插件的 README 里有它的凭证要求与配置说明。

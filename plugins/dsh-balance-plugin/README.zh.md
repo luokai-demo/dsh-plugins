@@ -29,20 +29,15 @@
 dsh plugin --profile <名字> add dsh-balance-plugin
 ```
 
-### 从 GitHub 安装
+### 从 GitHub Release 安装（无需 npm 账号）
+
+从 [releases 页面](https://github.com/luokai-demo/dsh-plugins/releases) 下载 `dsh-balance-plugin-<版本>.tgz`，然后：
 
 ```sh
-dsh plugin --profile <名字> add github:<你>/dsh-balance-plugin#<commit-sha>
+dsh plugin --profile <名字> add ./dsh-balance-plugin-<版本>.tgz
 ```
 
-Git 安装取到的是源码，pnpm ≥ 10 会拒绝安装时的构建，直到你允许：把 pnpm 打印的包键复制进 profile 的 `pnpm-workspace.yaml`：
-
-```yaml
-allowBuilds:
-  dsh-balance-plugin: true
-```
-
-然后重跑 `add`。只安装你信任源码的包，并钉住 commit。
+注意：插件位于 `dsh-plugins` monorepo 的 `plugins/` 子目录，`dsh plugin add github:...` 无法指向子目录——请使用 tarball（或 npm）。
 
 ## 配置
 

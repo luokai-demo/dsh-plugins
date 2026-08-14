@@ -29,20 +29,15 @@ Requires a DeepSeek account credential. The plugin resolves `DEEPSEEK_API_KEY` t
 dsh plugin --profile <name> add dsh-balance-plugin
 ```
 
-### From GitHub
+### From the GitHub Release (no npm account needed)
+
+Download `dsh-balance-plugin-<version>.tgz` from the [releases page](https://github.com/luokai-demo/dsh-plugins/releases), then:
 
 ```sh
-dsh plugin --profile <name> add github:<you>/dsh-balance-plugin#<commit-sha>
+dsh plugin --profile <name> add ./dsh-balance-plugin-<version>.tgz
 ```
 
-Git installs fetch source, so pnpm ≥ 10 refuses the install-time build until you allow it. Copy the exact package key pnpm prints into the profile's `pnpm-workspace.yaml`:
-
-```yaml
-allowBuilds:
-  dsh-balance-plugin: true
-```
-
-then re-run the `add` command. Only install packages whose source you trust, and pin the commit.
+Note: the plugin lives in the `plugins/` subdirectory of the `dsh-plugins` monorepo, so `dsh plugin add github:...` cannot target it — use the tarball (or npm).
 
 ## Configuration
 

@@ -16,7 +16,8 @@ Every plugin here is a standalone bundle: installable with `dsh plugin add`, pub
 
 ```sh
 dsh plugin --profile <name> add <plugin-name>          # from npm (recommended)
-dsh plugin --profile <name> add github:luokai-demo/dsh-plugins#<sha> -- # git-direct (needs allowBuilds)
+# or: download the <plugin-name>-<version>.tgz from the Releases page, then
+dsh plugin --profile <name> add ./<plugin-name>-<version>.tgz
 ```
 
 See each plugin's README for its credential requirements and configuration.
