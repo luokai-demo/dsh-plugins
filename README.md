@@ -2,99 +2,40 @@
 
 English | [中文](README.zh.md)
 
-Community plugin collection for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness).
+[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 社区插件集合——每个插件都是独立 bundle，一键安装、独立版本。
 
-Every plugin here is a standalone bundle: installable with `dsh plugin add`, published independently to npm, and discoverable through the [`dsh-plugin`](https://github.com/topics/dsh-plugin) topic. Each plugin lives in its own directory under `plugins/` with its own version and release cycle.
+## 插件
 
-## Plugins
+| 插件 | 效果 | 说明 | 安装 |
+|---|---|---|---|
+| **dsh-balance-plugin** | ![余额显示](plugins/dsh-balance-plugin/docs/screenshot.png) | 侧边栏底部显示 DeepSeek 钱包余额：信用卡图标 + 状态色金额（≥2 绿 / 0~2 黄 / ≤0 红），对话结束自动刷新、点击刷新 | `dsh plugin add dsh-balance-plugin` |
 
-| Plugin | What it does | Install |
-|---|---|---|
-| [dsh-balance-plugin](plugins/dsh-balance-plugin/README.md) | DeepSeek wallet balance at the sidebar foot: card icon + status-tinted amount, refreshed on turn end | `dsh plugin --profile <name> add dsh-balance-plugin` |
+## 安装方式
 
-## Installing a plugin
-
-```sh
-dsh plugin --profile <name> add <plugin-name>          # from npm (recommended)
-# or: download the <plugin-name>-<version>.tgz from the Releases page, then
-dsh plugin --profile <name> add ./<plugin-name>-<version>.tgz
-```
-
-See each plugin's README for its credential requirements and configuration.
-
-## Developing a plugin
-
-```
-plugins/
-  <plugin-name>/
-    package.json       # dsh.bundle manifest + dsh.client (for UI plugins)
-    cordis.patch.yml   # the configuration layer the bundle contributes
-    src/               # host half (index.ts) + browser half (client.tsx)
-    scripts/build.mjs  # esbuild: host ESM + browser __ModuleLoader__ bundle
-    tests/             # node:test unit tests (no framework)
-    README.md          # bilingual: features, install, config, FAQ, release checklist
-```
+**方式一：npm（推荐，一条命令）**
 
 ```sh
-pnpm install          # workspace-wide
-pnpm run build        # build every plugin
-pnpm test             # test every plugin
+dsh plugin --profile <你的profile名> add dsh-balance-plugin
 ```
 
-## Adding a new plugin
-
-1. Copy `plugins/dsh-balance-plugin` as a template (`cp -R plugins/dsh-balance-plugin plugins/<plugin-name>`).
-2. Rename in `plugins/<plugin-name>/package.json`: `name`, `description`, `version` (start at `0.1.0`), `repository` URL, `keywords`. Keep the bundle manifest shape (`dsh.bundle` + `cordis.patch.yml`) and the `dsh.client` block for UI plugins.
-3. Write your host half (`src/index.ts`), browser half (`src/client.tsx` if any), and pure logic (`src/balance-core.ts` equivalent); keep the per-request pattern for optional services.
-4. Write `tests/` (node:test, no framework) and the bilingual README (features, install, config, FAQ, release checklist).
-5. Verify locally before publishing:
+**方式二：GitHub Release**——从 [Releases](https://github.com/luokai-demo/dsh-plugins/releases) 下载 `dsh-balance-plugin-0.1.0.tgz`，然后：
 
 ```sh
-pnpm install
-pnpm run build && pnpm test
-dsh plugin --profile demo add ./plugins/<plugin-name>
-dsh --profile demo --dump-config     # expect a "# == <plugin-name>" layer
+dsh plugin --profile <你的profile名> add ./dsh-balance-plugin-0.1.0.tgz
 ```
 
-6. Add a row to the [Plugins](#plugins) table in this README.
-7. Commit and push.
+安装后重启 `dsh web` 并刷新浏览器，余额显示在侧边栏底部（设置按钮旁）。
 
-## Publishing a plugin
+## 交给 AI 安装
 
-Each plugin publishes independently, with its own version and release. Two channels are supported (see the plugin's `PUBLISHING.md` for the manual):
+把下面这句发给任意能操作终端的 AI，即可自动完成安装（`<你的profile名>` 换成你的，如 `web`）：
 
-### Channel A: GitHub Release tarball (no npm account needed)
+> 请帮我给 DeepSeek Harness 安装 dsh-balance-plugin 插件：先运行 `dsh plugin --profile <你的profile名> add dsh-balance-plugin`；如果 npm 上没有（报错 E404），就从 https://github.com/luokai-demo/dsh-plugins/releases 下载最新的 dsh-balance-plugin-*.tgz，再运行 `dsh plugin --profile <你的profile名> add ./dsh-balance-plugin-*.tgz`；安装后用 `dsh --profile <你的profile名> --dump-config` 确认出现 dsh-balance-plugin 层，然后重启 dsh web 并硬刷新浏览器（Cmd+Shift+R），最后确认侧边栏底部出现信用卡图标和余额数字。
 
-```sh
-cd plugins/<plugin-name>
-pnpm pack                                    # produces <plugin-name>-<version>.tgz
-cd ../..
-gh release create v<version> \
-  --title "<plugin-name> <version>" \
-  --notes "..." \
-  plugins/<plugin-name>/<plugin-name>-<version>.tgz
-git push --tags
-```
+## 开发与发布
 
-Users install from the Release page:
+新增插件、构建测试、双渠道发布的完整流程见 [DEVELOPING.md](DEVELOPING.md)。每个插件目录内有自己的 README 与发布手册。
 
-```sh
-dsh plugin --profile <name> add ./<plugin-name>-<version>.tgz
-```
-
-### Channel B: npm (optional; requires an npm account)
-
-```sh
-cd plugins/<plugin-name>
-pnpm run build && pnpm test
-npm version <patch|minor|major>   # bumps and tags
-pnpm pack                          # inspect the tarball (lib/, cordis.patch.yml, README, LICENSE only)
-npm publish                        # prebuilt code — users install with `dsh plugin add <name>`
-git push && git push --tags
-```
-
-Keep the npm version and the GitHub tag in sync. Note: because plugins live in subdirectories, `dsh plugin add github:<owner>/<repo>#<sha>` cannot target them — use Channel A or B.
-
-## License
+## 许可
 
 [MIT](LICENSE)

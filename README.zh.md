@@ -1,97 +1,40 @@
 # dsh-plugins
 
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 社区插件集合。
+[English](README.md) | 中文
 
-这里的每个插件都是独立 bundle：可用 `dsh plugin add` 安装，独立发布到 npm，并可通过 [`dsh-plugin`](https://github.com/topics/dsh-plugin) topic 发现。每个插件位于 `plugins/` 下自己的目录，拥有独立的版本与发布周期。
+[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 社区插件集合——每个插件都是独立 bundle，一键安装、独立版本。
 
 ## 插件列表
 
-| 插件 | 功能 | 安装 |
-|---|---|---|
-| [dsh-balance-plugin](plugins/dsh-balance-plugin/README.zh.md) | 侧边栏底部的 DeepSeek 钱包余额：信用卡图标 + 状态着色金额，对话结束时刷新 | `dsh plugin --profile <名字> add dsh-balance-plugin` |
+| 插件 | 效果 | 说明 | 安装 |
+|---|---|---|---|
+| **dsh-balance-plugin** | ![余额显示](plugins/dsh-balance-plugin/docs/screenshot.png) | 侧边栏底部显示 DeepSeek 钱包余额：信用卡图标 + 状态色金额（≥2 绿 / 0~2 黄 / ≤0 红），对话结束自动刷新、点击刷新 | `dsh plugin add dsh-balance-plugin` |
 
-## 安装插件
+## 安装方式
 
-```sh
-dsh plugin --profile <名字> add <插件名>            # 从 npm（推荐）
-# 或：从 Releases 页面下载 <插件名>-<版本>.tgz，然后
-dsh plugin --profile <名字> add ./<插件名>-<版本>.tgz
-```
-
-每个插件的 README 里有它的凭证要求与配置说明。
-
-## 开发插件
-
-```
-plugins/
-  <插件名>/
-    package.json       # dsh.bundle manifest + dsh.client（UI 插件）
-    cordis.patch.yml   # 该 bundle 贡献的配置层
-    src/               # 宿主半面（index.ts）+ 浏览器半面（client.tsx）
-    scripts/build.mjs  # esbuild：宿主 ESM + 浏览器 __ModuleLoader__ bundle
-    tests/             # node:test 单元测试（无测试框架）
-    README.md          # 双语：功能、安装、配置、FAQ、发布清单
-```
+**方式一：npm（推荐，一条命令）**
 
 ```sh
-pnpm install          # workspace 级
-pnpm run build        # 构建所有插件
-pnpm test             # 测试所有插件
+dsh plugin --profile <你的profile名> add dsh-balance-plugin
 ```
 
-## 新增插件
-
-1. 复制 `plugins/dsh-balance-plugin` 作为模板（`cp -R plugins/dsh-balance-plugin plugins/<插件名>`）。
-2. 修改 `plugins/<插件名>/package.json`：`name`、`description`、`version`（从 `0.1.0` 起）、`repository`、`keywords`。保留 bundle manifest 形态（`dsh.bundle` + `cordis.patch.yml`）与 UI 插件的 `dsh.client` 块。
-3. 编写宿主半面（`src/index.ts`）、浏览器半面（如有 `src/client.tsx`）与纯逻辑模块；可选服务遵循"每次请求时解析"模式。
-4. 编写 `tests/`（node:test，无框架）与双语 README（功能、安装、配置、FAQ、发布清单）。
-5. 发布前本地验证：
+**方式二：GitHub Release**——从 [Releases](https://github.com/luokai-demo/dsh-plugins/releases) 下载 `dsh-balance-plugin-0.1.0.tgz`，然后：
 
 ```sh
-pnpm install
-pnpm run build && pnpm test
-dsh plugin --profile demo add ./plugins/<插件名>
-dsh --profile demo --dump-config     # 应出现 "# == <插件名>" 层
+dsh plugin --profile <你的profile名> add ./dsh-balance-plugin-0.1.0.tgz
 ```
 
-6. 在上面的[插件列表](#插件列表)表格加一行。
-7. 提交并推送。
+安装后重启 `dsh web` 并刷新浏览器，余额显示在侧边栏底部（设置按钮旁）。
 
-## 发布插件
+## 交给 AI 安装
 
-每个插件独立发布，拥有自己的版本与 release。两条渠道都支持（详见插件的 `PUBLISHING.md`）：
+把下面这句发给任意能操作终端的 AI，即可自动完成安装（`<你的profile名>` 换成你的，如 `web`）：
 
-### 渠道 A：GitHub Release tarball（无需 npm 账号）
+> 请帮我给 DeepSeek Harness 安装 dsh-balance-plugin 插件：先运行 `dsh plugin --profile <你的profile名> add dsh-balance-plugin`；如果 npm 上没有（报错 E404），就从 https://github.com/luokai-demo/dsh-plugins/releases 下载最新的 dsh-balance-plugin-*.tgz，再运行 `dsh plugin --profile <你的profile名> add ./dsh-balance-plugin-*.tgz`；安装后用 `dsh --profile <你的profile名> --dump-config` 确认出现 dsh-balance-plugin 层，然后重启 dsh web 并硬刷新浏览器（Cmd+Shift+R），最后确认侧边栏底部出现信用卡图标和余额数字。
 
-```sh
-cd plugins/<插件名>
-pnpm pack                                    # 生成 <插件名>-<版本>.tgz
-cd ../..
-gh release create v<版本> \
-  --title "<插件名> <版本>" \
-  --notes "..." \
-  plugins/<插件名>/<插件名>-<版本>.tgz
-git push --tags
-```
+## 开发与发布
 
-用户从 Release 页面安装：
-
-```sh
-dsh plugin --profile <名字> add ./<插件名>-<版本>.tgz
-```
-
-### 渠道 B：npm（可选；需要 npm 账号）
-
-```sh
-cd plugins/<插件名>
-pnpm run build && pnpm test
-npm version <patch|minor|major>   # 同时 bump 版本并打 tag
-pnpm pack                          # 检查 tarball（只应包含 lib/、cordis.patch.yml、README、LICENSE）
-npm publish                        # 发布预构建代码——用户 `dsh plugin add <插件名>` 直接安装
-git push && git push --tags
-```
-
-保持 npm 版本与 GitHub tag 同步。注意：由于插件位于子目录，`dsh plugin add github:<owner>/<repo>#<sha>` **无法指向子目录**——请使用渠道 A 或 B。
+新增插件、构建测试、双渠道发布的完整流程见 [DEVELOPING.md](DEVELOPING.md)。每个插件目录内有自己的 README 与发布手册。
 
 ## 许可
 
