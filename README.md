@@ -2,40 +2,40 @@
 
 English | [中文](README.zh.md)
 
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 社区插件集合——每个插件都是独立 bundle，一键安装、独立版本。
+Community plugin collection for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) — every plugin is a standalone bundle with one-command install and its own version.
 
-## 插件
+## Plugins
 
-| 插件 | 效果 | 说明 | 安装 |
+| Plugin | Looks like | What it does | Install |
 |---|---|---|---|
-| **dsh-balance-plugin** | ![余额显示](plugins/dsh-balance-plugin/docs/screenshot.png) | 侧边栏底部显示 DeepSeek 钱包余额：信用卡图标 + 状态色金额（≥2 绿 / 0~2 黄 / ≤0 红），对话结束自动刷新、点击刷新 | `dsh plugin add dsh-balance-plugin` |
+| **dsh-balance-plugin** | ![balance readout](plugins/dsh-balance-plugin/docs/screenshot.png) | DeepSeek wallet balance at the sidebar foot: card icon + status-tinted amount (green ≥ 2, amber 0–2, red ≤ 0), refreshes on turn end and on click | `dsh plugin add dsh-balance-plugin` |
 
-## 安装方式
+## Install
 
-**方式一：npm（推荐，一条命令）**
-
-```sh
-dsh plugin --profile <你的profile名> add dsh-balance-plugin
-```
-
-**方式二：GitHub Release**——从 [Releases](https://github.com/luokai-demo/dsh-plugins/releases) 下载 `dsh-balance-plugin-0.1.0.tgz`，然后：
+**Option 1 — npm (recommended, one command).** `<profile>` is your profile name, e.g. `web`:
 
 ```sh
-dsh plugin --profile <你的profile名> add ./dsh-balance-plugin-0.1.0.tgz
+dsh plugin --profile <profile> add dsh-balance-plugin
 ```
 
-安装后重启 `dsh web` 并刷新浏览器，余额显示在侧边栏底部（设置按钮旁）。
+**Option 2 — GitHub Release.** Download `dsh-balance-plugin-0.1.0.tgz` from the [Releases](https://github.com/luokai-demo/dsh-plugins/releases) page, then:
 
-## 交给 AI 安装
+```sh
+dsh plugin --profile <profile> add ./dsh-balance-plugin-0.1.0.tgz
+```
 
-把下面这句发给任意能操作终端的 AI，即可自动完成安装（`<你的profile名>` 换成你的，如 `web`）：
+Restart `dsh web` and refresh the browser — the balance appears at the sidebar foot (beside Settings).
 
-> 请帮我给 DeepSeek Harness 安装 dsh-balance-plugin 插件：先运行 `dsh plugin --profile <你的profile名> add dsh-balance-plugin`；如果 npm 上没有（报错 E404），就从 https://github.com/luokai-demo/dsh-plugins/releases 下载最新的 dsh-balance-plugin-*.tgz，再运行 `dsh plugin --profile <你的profile名> add ./dsh-balance-plugin-*.tgz`；安装后用 `dsh --profile <你的profile名> --dump-config` 确认出现 dsh-balance-plugin 层，然后重启 dsh web 并硬刷新浏览器（Cmd+Shift+R），最后确认侧边栏底部出现信用卡图标和余额数字。
+## Install with an AI assistant
 
-## 开发与发布
+Paste this prompt to any AI that can operate a terminal (replace `<profile>` with your profile name, e.g. `web`):
 
-新增插件、构建测试、双渠道发布的完整流程见 [DEVELOPING.md](DEVELOPING.md)。每个插件目录内有自己的 README 与发布手册。
+> Install the dsh-balance-plugin plugin for DeepSeek Harness: first run `dsh plugin --profile <profile> add dsh-balance-plugin`; if npm does not have it (E404 error), download the latest dsh-balance-plugin-*.tgz from https://github.com/luokai-demo/dsh-plugins/releases and run `dsh plugin --profile <profile> add ./dsh-balance-plugin-*.tgz`; after installing, confirm the dsh-balance-plugin layer appears with `dsh --profile <profile> --dump-config`, then restart `dsh web`, hard-refresh the browser (Cmd+Shift+R), and finally verify a card icon with the balance amount at the sidebar foot.
 
-## 许可
+## Development and publishing
+
+Full workflows for adding plugins, building, testing, and releasing through both channels live in [DEVELOPING.md](DEVELOPING.md). Each plugin directory carries its own README and publishing manual.
+
+## License
 
 [MIT](LICENSE)
