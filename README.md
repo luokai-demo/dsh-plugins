@@ -12,25 +12,25 @@ Community plugin collection for [DeepSeek Harness](https://github.com/deepseek-a
 
 ## Install
 
-**Option 1 — npm (recommended, one command).** `<profile>` is your profile name, e.g. `web`:
+**Option 1 — npm (recommended, one command).** `web` is the profile `dsh web` uses; replace it with your own profile name if yours differs (see `ls ~/.dsh/profiles/`):
 
 ```sh
-dsh plugin --profile <profile> add dsh-balance-plugin
+dsh plugin --profile web add dsh-balance-plugin
 ```
 
 **Option 2 — GitHub Release.** Download `dsh-balance-plugin-0.1.0.tgz` from the [Releases](https://github.com/luokai-demo/dsh-plugins/releases) page, then:
 
 ```sh
-dsh plugin --profile <profile> add ./dsh-balance-plugin-0.1.0.tgz
+dsh plugin --profile web add ./dsh-balance-plugin-0.1.0.tgz
 ```
 
 Restart `dsh web` and refresh the browser — the balance appears at the sidebar foot (beside Settings).
 
 ## Install with an AI assistant
 
-Paste this prompt to any AI that can operate a terminal (replace `<profile>` with your profile name, e.g. `web`):
+Paste this prompt to any AI that can operate a terminal:
 
-> Install the dsh-balance-plugin plugin for DeepSeek Harness: first run `dsh plugin --profile <profile> add dsh-balance-plugin`; if npm does not have it (E404 error), download the latest dsh-balance-plugin-*.tgz from https://github.com/luokai-demo/dsh-plugins/releases and run `dsh plugin --profile <profile> add ./dsh-balance-plugin-*.tgz`; after installing, confirm the dsh-balance-plugin layer appears with `dsh --profile <profile> --dump-config`, then restart `dsh web`, hard-refresh the browser (Cmd+Shift+R), and finally verify a card icon with the balance amount at the sidebar foot.
+> Install the dsh-balance-plugin plugin for DeepSeek Harness: first run `dsh plugin --profile web add dsh-balance-plugin`; if npm does not have it (E404 error), download the latest dsh-balance-plugin-*.tgz from https://github.com/luokai-demo/dsh-plugins/releases and run `dsh plugin --profile web add ./dsh-balance-plugin-*.tgz`; after installing, confirm the dsh-balance-plugin layer appears with `dsh --profile web --dump-config`, then restart `dsh web`, hard-refresh the browser (Cmd+Shift+R), and finally verify a card icon with the balance amount at the sidebar foot. (Replace `web` with your profile name if you do not use the default one.)
 
 ## Development and publishing
 
