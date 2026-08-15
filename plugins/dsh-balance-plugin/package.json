@@ -1,7 +1,7 @@
 {
   "name": "dsh-balance-plugin",
-  "version": "0.1.0",
-  "description": "DeepSeek wallet-balance readout at the sidebar foot: card icon + amount, status-tinted, refreshed on turn end and on click",
+  "version": "0.2.0",
+  "description": "DeepSeek wallet-balance readout at the sidebar foot: card icon + amount, status-tinted, refreshed on turn end and on click, with a floating delta animation on change",
   "type": "module",
   "main": "lib/index.js",
   "exports": {

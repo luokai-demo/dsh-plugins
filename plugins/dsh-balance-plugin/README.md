@@ -4,7 +4,7 @@ DeepSeek wallet balance at the sidebar foot — a [DeepSeek Harness](https://git
 
 English | [中文](README.zh.md)
 
-Shows your DeepSeek account balance as a **card icon + amount** in the sidebar footer (beside Settings), tinted by how much is left. Refreshes when a conversation turn ends, on click, and on mount — no polling.
+Shows your DeepSeek account balance as a **card icon + amount** in the sidebar footer (beside Settings), tinted by how much is left. Refreshes when a conversation turn ends, on click, and on mount — no polling. When the amount changes, a signed delta (`+¥3.14` / `-¥1.97`) floats up and fades next to it — every spend (or top-up) is visible at a glance.
 
 ![screenshot placeholder: sidebar foot showing `💳 ¥12.34` in green](docs/screenshot.png)
 
@@ -16,6 +16,7 @@ Shows your DeepSeek account balance as a **card icon + amount** in the sidebar f
   - zero or below: red
 - **Refresh on turn end**: the host pushes an SSE `refresh` event when any conversation turn ends — wallet spend settles with the turn.
 - **Click to refresh**; in-flight refreshes are deduped (a click or turn-end tick during a pending query is a no-op).
+- **Float delta**: on a visible amount change, a signed delta floats up and fades out — green when the balance rises, red when it falls. Zero or sub-cent changes are silent, the first load never floats, and the animation is suppressed under `prefers-reduced-motion`.
 - **Silent failure**: unconfigured credentials or a failed fetch render nothing — the readout is advisory and never surfaces an error.
 - **Original currencies**: balances are displayed as the provider reports them; no conversion, no summing.
 

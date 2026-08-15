@@ -25,6 +25,16 @@ await build({
 })
 
 await build({
+  entryPoints: ['src/float.ts'],
+  bundle: true,
+  platform: 'node',
+  format: 'esm',
+  target: 'es2022',
+  outfile: 'lib/float.js',
+  define,
+})
+
+await build({
   entryPoints: ['src/index.ts'],
   bundle: true,
   platform: 'node',
@@ -52,4 +62,4 @@ await build({
   },
 })
 
-console.log('dsh-balance-plugin built: lib/index.js + lib/client.js')
+console.log('dsh-balance-plugin built: lib/index.js + lib/client.js + lib/float.js')
