@@ -8,7 +8,7 @@ Community plugin collection for [DeepSeek Harness](https://github.com/deepseek-a
 
 | Plugin | Looks like | What it does | Install |
 |---|---|---|---|
-| **dsh-balance-plugin** | ![balance readout](plugins/dsh-balance-plugin/docs/screenshot.png) | DeepSeek wallet balance at the sidebar foot: card icon + status-tinted amount (green ≥ 2, amber 0–2, red ≤ 0), refreshes on turn end and on click | `dsh plugin add dsh-balance-plugin` |
+| **dsh-balance-plugin** | ![balance readout](plugins/dsh-balance-plugin/docs/screenshot.png) | DeepSeek wallet balance at the sidebar foot: card icon + status-tinted amount (green ≥ 2, amber 0–2, red ≤ 0), refreshes on turn end and on click, with a floating delta (`+¥3.14` / `-¥1.97`) animating up and fading on every balance change | `dsh plugin add dsh-balance-plugin` |
 
 ## Install
 
@@ -18,10 +18,10 @@ Community plugin collection for [DeepSeek Harness](https://github.com/deepseek-a
 dsh plugin --profile web add dsh-balance-plugin
 ```
 
-**Option 2 — GitHub Release.** Download `dsh-balance-plugin-0.1.0.tgz` from the [Releases](https://github.com/luokai-demo/dsh-plugins/releases) page, then:
+**Option 2 — GitHub Release.** Download `dsh-balance-plugin-0.2.0.tgz` from the [Releases](https://github.com/luokai-demo/dsh-plugins/releases) page, then:
 
 ```sh
-dsh plugin --profile web add ./dsh-balance-plugin-0.1.0.tgz
+dsh plugin --profile web add ./dsh-balance-plugin-0.2.0.tgz
 ```
 
 Restart `dsh web` and refresh the browser — the balance appears at the sidebar foot (beside Settings).

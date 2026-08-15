@@ -8,7 +8,7 @@
 
 | 插件 | 效果 | 说明 | 安装 |
 |---|---|---|---|
-| **dsh-balance-plugin** | ![余额显示](plugins/dsh-balance-plugin/docs/screenshot.png) | 侧边栏底部显示 DeepSeek 钱包余额：信用卡图标 + 状态色金额（≥2 绿 / 0~2 黄 / ≤0 红），对话结束自动刷新、点击刷新 | `dsh plugin add dsh-balance-plugin` |
+| **dsh-balance-plugin** | ![余额显示](plugins/dsh-balance-plugin/docs/screenshot.png) | 侧边栏底部显示 DeepSeek 钱包余额：信用卡图标 + 状态色金额（≥2 绿 / 0~2 黄 / ≤0 红），对话结束自动刷新、点击刷新；余额变动时带符号差额（`+¥3.14` / `-¥1.97`）上飘淡出 | `dsh plugin add dsh-balance-plugin` |
 
 ## 安装方式
 
@@ -20,10 +20,10 @@
 dsh plugin --profile web add dsh-balance-plugin
 ```
 
-**方式二：GitHub Release**——从 [Releases](https://github.com/luokai-demo/dsh-plugins/releases) 下载 `dsh-balance-plugin-0.1.0.tgz`，然后：
+**方式二：GitHub Release**——从 [Releases](https://github.com/luokai-demo/dsh-plugins/releases) 下载 `dsh-balance-plugin-0.2.0.tgz`，然后：
 
 ```sh
-dsh plugin --profile web add ./dsh-balance-plugin-0.1.0.tgz
+dsh plugin --profile web add ./dsh-balance-plugin-0.2.0.tgz
 ```
 
 安装后重启 `dsh web` 并刷新浏览器，余额显示在侧边栏底部（设置按钮旁）。
