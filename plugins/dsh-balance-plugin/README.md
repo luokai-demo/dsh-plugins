@@ -2,6 +2,8 @@
 
 DeepSeek wallet balance at the sidebar foot — a [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) plugin.
 
+> **DeepSeek-only**: this plugin targets the DeepSeek platform exclusively — the official DeepSeek balance endpoint and `DEEPSEEK_API_KEY`. No other platforms or providers are supported.
+
 English | [中文](README.zh.md)
 
 Shows your DeepSeek account balance as a **card icon + amount** in the sidebar footer (beside Settings), tinted by how much is left. Refreshes when a conversation turn ends, on click, and on mount — no polling. When the amount changes, a signed delta (`+¥3.14` / `-¥1.97`) floats up and fades next to it — every spend (or top-up) is visible at a glance.

@@ -2,7 +2,7 @@
 
 English | [中文](README.zh.md)
 
-Community plugin collection for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) — every plugin is a standalone bundle with one-command install and its own version.
+**A DeepSeek-only plugin series** for [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) — every plugin targets the DeepSeek platform exclusively: official DeepSeek API endpoints, `DEEPSEEK_API_KEY` credentials, and the DeepSeek wallet. No other platforms or providers are supported, and no cross-provider compatibility is planned. Each plugin is a standalone bundle with one-command install and its own version.
 
 ## Plugins
 

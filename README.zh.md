@@ -2,7 +2,7 @@
 
 [English](README.md) | 中文
 
-[DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 社区插件集合——每个插件都是独立 bundle，一键安装、独立版本。
+**纯 DeepSeek 系列插件**，面向 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness)——每个插件只针对 DeepSeek 平台：官方 DeepSeek API 端点、`DEEPSEEK_API_KEY` 凭证、DeepSeek 钱包。不支持任何其他平台或服务商，也没有跨平台兼容计划。每个插件都是独立 bundle，一键安装、独立版本。
 
 ## 插件列表
 

@@ -2,6 +2,8 @@
 
 侧边栏底部的 DeepSeek 钱包余额——一个 [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) 插件。
 
+> **纯 DeepSeek**：本插件只针对 DeepSeek 平台——官方 DeepSeek 余额端点与 `DEEPSEEK_API_KEY`，不支持任何其他平台或服务商。
+
 [English](README.md) | 中文
 
 在侧边栏底部（设置按钮旁）以**信用卡图标 + 金额**显示你的 DeepSeek 账户余额，并按剩余额度着色。在对话结束时、点击时与挂载时刷新——无轮询。金额变动时，带符号的差额（`+¥3.14` / `-¥1.97`）会从余额旁上飘淡出——每次花费（或充值）都一目了然。
