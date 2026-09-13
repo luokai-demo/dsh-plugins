@@ -18,10 +18,10 @@ English | [中文](README.zh.md)
 dsh plugin --profile web add dsh-balance-plugin
 ```
 
-**Option 2 — GitHub Release.** Download `dsh-balance-plugin-0.2.1.tgz` from the [Releases](https://github.com/luokai-demo/dsh-plugins/releases) page, then:
+**Option 2 — GitHub Release.** Download the `dsh-balance-plugin-<version>.tgz` asset for the release you want from the [Releases](https://github.com/luokai-demo/dsh-plugins/releases) page, then:
 
 ```sh
-dsh plugin --profile web add ./dsh-balance-plugin-0.2.1.tgz
+dsh plugin --profile web add ./dsh-balance-plugin-<version>.tgz
 ```
 
 Restart `dsh web` and refresh the browser — the balance appears at the sidebar foot (beside Settings).

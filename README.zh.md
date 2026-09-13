@@ -20,10 +20,10 @@
 dsh plugin --profile web add dsh-balance-plugin
 ```
 
-**方式二：GitHub Release**——从 [Releases](https://github.com/luokai-demo/dsh-plugins/releases) 下载 `dsh-balance-plugin-0.2.1.tgz`，然后：
+**方式二：GitHub Release**——从 [Releases](https://github.com/luokai-demo/dsh-plugins/releases) 下载目标版本的 `dsh-balance-plugin-<version>.tgz`，然后：
 
 ```sh
-dsh plugin --profile web add ./dsh-balance-plugin-0.2.1.tgz
+dsh plugin --profile web add ./dsh-balance-plugin-<version>.tgz
 ```
 
 安装后重启 `dsh web` 并刷新浏览器，余额显示在侧边栏底部（设置按钮旁）。
