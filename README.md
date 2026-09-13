@@ -18,13 +18,24 @@ English | [中文](README.zh.md)
 dsh plugin --profile web add dsh-balance-plugin
 ```
 
-**Option 2 — GitHub Release.** Download `dsh-balance-plugin-0.2.0.tgz` from the [Releases](https://github.com/luokai-demo/dsh-plugins/releases) page, then:
+**Option 2 — GitHub Release.** Download `dsh-balance-plugin-0.2.1.tgz` from the [Releases](https://github.com/luokai-demo/dsh-plugins/releases) page, then:
 
 ```sh
-dsh plugin --profile web add ./dsh-balance-plugin-0.2.0.tgz
+dsh plugin --profile web add ./dsh-balance-plugin-0.2.1.tgz
 ```
 
 Restart `dsh web` and refresh the browser — the balance appears at the sidebar foot (beside Settings).
+
+## Update
+
+The plugin requires DeepSeek Harness `0.1.5-rc.1` or later. For an existing npm install:
+
+```sh
+dsh plugin --profile web update dsh-balance-plugin
+dsh --profile web --dump-config  # expect a "# == dsh-balance-plugin" layer
+```
+
+Restart `dsh web` and hard-refresh the browser after the update. To update a Release-tarball install, run `dsh plugin --profile web add ./dsh-balance-plugin-<version>.tgz` with the newer archive, then run the same verification.
 
 ## Install with an AI assistant
 

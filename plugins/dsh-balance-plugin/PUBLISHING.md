@@ -1,45 +1,53 @@
 # Publishing dsh-balance-plugin
 
-Step-by-step release manual for the two official distribution channels (both are supported and can coexist).
+Release manual for the supported npm and GitHub Release tarball channels.
 
 ## Prerequisites
 
 - [npm](https://docs.npmjs.com/cli/) account, logged in: `npm whoami`
 - A GitHub account; the repository will be public.
 
-## 1. Create the GitHub repository
-
-1. On GitHub, **New repository** → name `dsh-balance-plugin`, public.
-2. **Do not** initialize with README/.gitignore (this repo already has them).
-3. Add the local remote and push:
+## 1. Build and verify
 
 ```sh
-cd ~/Documents/dsh-balance-plugin
-git remote add origin git@github.com:luokai-demo/dsh-plugins.git
-git push -u origin main
+# from plugins/dsh-balance-plugin
+pnpm run build
+pnpm test
+pnpm pack --dry-run  # must contain lib/, cordis.patch.yml, README files, and LICENSE
 ```
 
-4. On the repository page: **About → Topics → add `dsh-plugin`** (the official discovery topic from DeepSeek Harness's README). Also consider `deepseek-harness`.
+In an isolated DSH `0.1.5-rc.1` or later profile, verify both installation and update behavior:
+
+```sh
+dsh plugin --profile demo add ./dsh-balance-plugin-<version>.tgz
+dsh plugin --profile demo update dsh-balance-plugin
+dsh --profile demo --dump-config  # expect "# == dsh-balance-plugin"
+```
+
+Restart the Web profile and hard-refresh the browser to verify the authenticated balance readout.
 
 ## 2. Publish to npm
 
 ```sh
-# from ~/Documents/dsh-balance-plugin
 pnpm run build && pnpm test     # gates
-npm version patch                # bumps to 0.1.1, creates the git tag
+npm version patch                # creates the release version and git tag
 pnpm pack                        # inspect the tarball contents
 npm publish                      # publishes prebuilt lib/ — users install with zero friction
 git push && git push --tags
 ```
 
-npm is the **recommended** channel: users run `dsh plugin --profile <name> add dsh-balance-plugin` and get prebuilt code with no install-time build or permission prompt.
+npm is the **recommended** channel: users run `dsh plugin --profile <name> add dsh-balance-plugin` and get prebuilt code with no install-time build or permission prompt. Existing npm users upgrade with `dsh plugin --profile <name> update dsh-balance-plugin`.
 
-## 3. GitHub installs (optional, automatic once the repo exists)
+## 3. Publish a GitHub Release tarball
 
-Users can also install directly from GitHub. Two official caveats (from `docs/user/develop/basic/publish.md`):
+The package is in this monorepo's `plugins/` subdirectory, so `github:` package specs cannot target it. Publish the prebuilt tarball instead:
 
-- Git installs fetch **source**, not build output — the package ships a self-contained `prepare` script (`node scripts/build.mjs`, no project references), which pnpm runs after install;
-- pnpm ≥ 10 refuses to run git dependencies' `prepare` until the user opts in via `allowBuilds` in the profile's `pnpm-workspace.yaml`. Document this in your README (already present).
+```sh
+pnpm pack
+gh release create v<version> dsh-balance-plugin-<version>.tgz --title "dsh-balance-plugin <version>" --notes-file <notes-file>
+```
+
+Users install or replace a tarball release with `dsh plugin --profile <name> add ./dsh-balance-plugin-<version>.tgz`, then run `dsh --profile <name> --dump-config` and restart DSH.
 
 ## 4. Versioning and release notes
 
@@ -47,16 +55,7 @@ Users can also install directly from GitHub. Two official caveats (from `docs/us
 - Create a GitHub Release per tag with the changelog; reference the npm version.
 - Semantic versioning: `patch` for fixes, `minor` for features, `major` for breaking changes.
 
-## 5. Verification checklist (official inspection points)
-
-```sh
-# fresh install from the tarball
-dsh plugin --profile demo add ./dsh-balance-plugin-0.1.0.tgz
-dsh --profile demo --dump-config     # expect "# == dsh-balance-plugin" layer
-# then in the web profile with a real credential: the readout renders
-```
-
-## 6. Local development loop
+## 5. Local development loop
 
 ```sh
 pnpm install

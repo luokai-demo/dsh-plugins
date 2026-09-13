@@ -24,7 +24,7 @@
 
 ## 安装
 
-需要一个 DeepSeek 账户凭证。插件通过 harness 凭证接缝（`~/.dsh/.credentials.yaml` 或环境变量）解析 `DEEPSEEK_API_KEY`，与官方 DeepSeek 适配器一致。
+需要 DeepSeek Harness `0.1.5-rc.1` 或更高版本，以及一个 DeepSeek 账户凭证。插件通过可选的 harness 凭证服务（`~/.dsh/.credentials.yaml`）或环境变量解析 `DEEPSEEK_API_KEY`。
 
 ### 从 npm 安装（推荐）
 
@@ -41,6 +41,18 @@ dsh plugin --profile <名字> add ./dsh-balance-plugin-<版本>.tgz
 ```
 
 注意：插件位于 `dsh-plugins` monorepo 的 `plugins/` 子目录，`dsh plugin add github:...` 无法指向子目录——请使用 tarball（或 npm）。
+
+### 升级已有安装
+
+通过 npm 安装的版本，在同一个 profile 中升级包，确认 bundle 层仍处于启用状态，然后重启 Web 服务：
+
+```sh
+dsh plugin --profile <名字> update dsh-balance-plugin
+dsh --profile <名字> --dump-config  # 应出现 "# == dsh-balance-plugin" 层
+# 重启 dsh web，然后硬刷新浏览器
+```
+
+`dsh plugin` 会转发 pnpm 命令，并在成功升级后重新核对已安装包的 `dsh.bundle` 声明。GitHub Release tarball 则执行 `dsh plugin --profile <名字> add ./dsh-balance-plugin-<版本>.tgz` 安装新归档，再进行相同的验证与重启。
 
 ## 配置
 
@@ -61,7 +73,7 @@ dsh plugin --profile <名字> add ./dsh-balance-plugin-<版本>.tgz
 
 | 半面 | 做什么 |
 |---|---|
-| **宿主**（Node） | 注册 `GET /dsh-balance`（钱包读数 JSON）与 `GET /dsh-balance/events`（SSE 流）。监听 harness 的 `session/event` 广播，每个 `turn/end` 推送 `refresh` 事件。**每次请求**经 `ctx.credentials` 解析凭证并回退环境变量——改 key 无需重启。 |
+| **宿主**（Node） | 注册经认证的 `GET /dsh-balance`（钱包读数 JSON）与 `GET /dsh-balance/events`（SSE 流）。每个路由都会先通过 Harness 的浏览器身份与 Origin 栅栏，再读取凭证。监听 `session/event`，每个 `turn/end` 推送 `refresh`；**每次请求**经可选服务解析凭证，再回退环境变量。 |
 | **客户端**（浏览器） | 注册 `sidebar.footer.action` 插槽条目（shell 预留的设置旁座位；收起 rail 时堆叠在设置图标上方）。在挂载时、`refresh` SSE 事件与点击时抓取读数，带 in-flight 守卫。信用卡图标自包含（不依赖 shell 的图标库）。 |
 
 位置与交互遵循 shell 自身设计：`sidebar.footer.action` 是"设置旁可选操作"的官方扩展点。
@@ -88,13 +100,13 @@ src/
   index.ts          # 宿主插件：路由 + SSE + 轮次结束监听
   client.tsx        # 浏览器插件：侧边栏底部操作
 scripts/build.mjs   # esbuild：宿主 ESM + 浏览器 __ModuleLoader__ bundle
-tests/              # balance-core 的 node:test 单元测试
+tests/              # balance-core、float 与宿主路由的 node:test 单元测试
 ```
 
 ```sh
 pnpm install
 pnpm run build    # 生成 lib/index.js + lib/client.js
-pnpm test         # balance-core 单元测试
+pnpm test         # balance-core、float 与宿主路由单元测试
 ```
 
 本地安装检查（官方检验点）：
@@ -109,7 +121,7 @@ dsh --profile demo --dump-config   # 应出现 "# == dsh-balance-plugin" 层
 发布新版本前：
 
 1. `pnpm run build` 与 `pnpm test` 通过。
-2. 上述本地安装检查通过（`--dump-config` 显示层；web profile 用真实凭证渲染读数）。
+2. 上述本地安装与 `dsh plugin --profile demo update dsh-balance-plugin` 都通过；`--dump-config` 保留该层，且 Web profile 在真实凭证下能渲染读数。
 3. 版本已提升（`npm version patch/minor/major`）；git tag 对应。
 4. `pnpm pack`——检查 tarball：必须包含 `lib/`、`cordis.patch.yml`、`README.md`（别无其他大文件）。
 5. `npm publish`——发布预构建代码，用户零摩擦安装。

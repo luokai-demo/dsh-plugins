@@ -1,4 +1,5 @@
 packages:
   - plugins/*
 allowBuilds:
-  esbuild: set this to true or false
+  # 本插件的 prepare 需要 esbuild 生成可分发的宿主与客户端产物。
+  esbuild: true

@@ -24,7 +24,7 @@ Shows your DeepSeek account balance as a **card icon + amount** in the sidebar f
 
 ## Install
 
-Requires a DeepSeek account credential. The plugin resolves `DEEPSEEK_API_KEY` through the harness credential seam (`~/.dsh/.credentials.yaml` or the environment), exactly like the official DeepSeek adapter.
+Requires DeepSeek Harness `0.1.5-rc.1` or later and a DeepSeek account credential. The plugin resolves `DEEPSEEK_API_KEY` through the optional harness credential service (`~/.dsh/.credentials.yaml`) or the environment.
 
 ### From npm (recommended)
 
@@ -41,6 +41,18 @@ dsh plugin --profile <name> add ./dsh-balance-plugin-<version>.tgz
 ```
 
 Note: the plugin lives in the `plugins/` subdirectory of the `dsh-plugins` monorepo, so `dsh plugin add github:...` cannot target it — use the tarball (or npm).
+
+### Update an existing install
+
+For npm installs, update the package in the same profile, confirm that its bundle layer remains active, then restart the Web server:
+
+```sh
+dsh plugin --profile <name> update dsh-balance-plugin
+dsh --profile <name> --dump-config  # expect a "# == dsh-balance-plugin" layer
+# restart dsh web, then hard-refresh the browser
+```
+
+`dsh plugin` forwards pnpm commands and reconciles the installed package's `dsh.bundle` declaration after a successful update. For a Release tarball, run `dsh plugin --profile <name> add ./dsh-balance-plugin-<version>.tgz` with the newer archive, then perform the same verification and restart.
 
 ## Configuration
 
@@ -61,7 +73,7 @@ The plugin ships with sensible defaults; override via the bundle's plugin row:
 
 | Half | What it does |
 |---|---|
-| **Host** (Node) | Registers `GET /dsh-balance` (the wallet readout as JSON) and `GET /dsh-balance/events` (an SSE stream). Listens on the harness's `session/event` broadcast and emits a `refresh` SSE event per `turn/end`. Resolves the credential **per request** through `ctx.credentials`, falling back to the environment — a changed key applies without a restart. |
+| **Host** (Node) | Registers authenticated `GET /dsh-balance` (the wallet readout as JSON) and `GET /dsh-balance/events` (an SSE stream). Each route passes the Harness browser-auth and Origin fence before reading a credential. It listens on `session/event` and emits `refresh` per `turn/end`, resolving credentials **per request** through the optional service before falling back to the environment. |
 | **Client** (browser) | Registers the `sidebar.footer.action` slot entry (the shell's reserved seat beside Settings; on the collapsed rail it stacks above the settings icon). Fetches the readout on mount, on `refresh` SSE events, and on click, with an in-flight guard. The card icon is self-contained (no dependency on the shell's icon library). |
 
 Position and interaction follow the shell's own design: the `sidebar.footer.action` hole is the official extension point for "optional actions beside Settings".
@@ -94,7 +106,7 @@ tests/              # node:test unit tests for balance-core
 ```sh
 pnpm install
 pnpm run build    # emits lib/index.js + lib/client.js
-pnpm test         # balance-core unit tests
+pnpm test         # balance-core, float, and host-route unit tests
 ```
 
 Local install check (official verification points):
@@ -109,7 +121,7 @@ dsh --profile demo --dump-config   # expect a "# == dsh-balance-plugin" layer
 Before publishing a new version:
 
 1. `pnpm run build` and `pnpm test` pass.
-2. Local install check above passes (`--dump-config` shows the layer; the web profile renders the readout with a real credential).
+2. Local install and `dsh plugin --profile demo update dsh-balance-plugin` both keep the `--dump-config` layer; the web profile renders the readout with a real credential.
 3. Version bumped (`npm version patch/minor/major`); git tag matches.
 4. `pnpm pack` — inspect the tarball: it must contain `lib/`, `cordis.patch.yml`, `README.md` (and nothing else heavy).
 5. `npm publish` — publishes prebuilt code, so users install with zero friction.

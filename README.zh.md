@@ -20,13 +20,24 @@
 dsh plugin --profile web add dsh-balance-plugin
 ```
 
-**方式二：GitHub Release**——从 [Releases](https://github.com/luokai-demo/dsh-plugins/releases) 下载 `dsh-balance-plugin-0.2.0.tgz`，然后：
+**方式二：GitHub Release**——从 [Releases](https://github.com/luokai-demo/dsh-plugins/releases) 下载 `dsh-balance-plugin-0.2.1.tgz`，然后：
 
 ```sh
-dsh plugin --profile web add ./dsh-balance-plugin-0.2.0.tgz
+dsh plugin --profile web add ./dsh-balance-plugin-0.2.1.tgz
 ```
 
 安装后重启 `dsh web` 并刷新浏览器，余额显示在侧边栏底部（设置按钮旁）。
+
+## 升级
+
+插件需要 DeepSeek Harness `0.1.5-rc.1` 或更高版本。已通过 npm 安装时：
+
+```sh
+dsh plugin --profile web update dsh-balance-plugin
+dsh --profile web --dump-config  # 应出现 "# == dsh-balance-plugin" 层
+```
+
+升级后重启 `dsh web` 并硬刷新浏览器。若通过 Release tarball 安装，请用新归档执行 `dsh plugin --profile web add ./dsh-balance-plugin-<版本>.tgz`，然后进行相同验证。
 
 ## 交给 AI 安装
 
