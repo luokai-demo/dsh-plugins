@@ -18,6 +18,12 @@ English | [中文](README.zh.md)
 dsh plugin --profile web add dsh-balance-plugin
 ```
 
+If a registry mirror or pnpm 11's minimum-release-age guard has not picked up a just-released version yet, install or update that exact version from the official npm registry instead:
+
+```sh
+dsh plugin --profile web add dsh-balance-plugin@<version> --registry=https://registry.npmjs.org/
+```
+
 **Option 2 — GitHub Release.** Download the `dsh-balance-plugin-<version>.tgz` asset for the release you want from the [Releases](https://github.com/luokai-demo/dsh-plugins/releases) page, then:
 
 ```sh

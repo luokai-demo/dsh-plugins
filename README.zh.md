@@ -20,6 +20,12 @@
 dsh plugin --profile web add dsh-balance-plugin
 ```
 
+如果刚发布的版本尚未同步到你的 registry 镜像，或被 pnpm 11 的最小发布时间保护暂时拦截，请改用 npm 官方源精确安装或升级该版本：
+
+```sh
+dsh plugin --profile web add dsh-balance-plugin@<version> --registry=https://registry.npmjs.org/
+```
+
 **方式二：GitHub Release**——从 [Releases](https://github.com/luokai-demo/dsh-plugins/releases) 下载目标版本的 `dsh-balance-plugin-<version>.tgz`，然后：
 
 ```sh
