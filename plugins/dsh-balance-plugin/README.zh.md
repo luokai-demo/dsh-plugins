@@ -24,7 +24,7 @@
 
 ## 安装
 
-需要 DeepSeek Harness `0.1.5-rc.1` 或更高版本，以及一个 DeepSeek 账户凭证。插件通过可选的 harness 凭证服务（`~/.dsh/.credentials.yaml`）或环境变量解析 `DEEPSEEK_API_KEY`。
+需要 DeepSeek Harness `0.1.7` 系列（包括 `0.1.7-rc.1`）以及一个 DeepSeek 账户凭证。包清单会声明这一运行时范围，因此 Harness 插件管理器会在加载前拒绝不兼容的 DSH 版本。插件通过可选的 harness 凭证服务（`~/.dsh/.credentials.yaml`）或环境变量解析 `DEEPSEEK_API_KEY`。
 
 ### 从 npm 安装（推荐）
 

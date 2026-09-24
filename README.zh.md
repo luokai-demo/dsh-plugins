@@ -36,7 +36,7 @@ dsh plugin --profile web add ./dsh-balance-plugin-<version>.tgz
 
 ## 升级
 
-插件需要 DeepSeek Harness `0.1.5-rc.1` 或更高版本。已通过 npm 安装时：
+插件需要 DeepSeek Harness `0.1.7` 系列，包括 `0.1.7-rc.1`。已通过 npm 安装时：
 
 ```sh
 dsh plugin --profile web update dsh-balance-plugin

@@ -16,7 +16,7 @@ pnpm test
 pnpm pack --dry-run  # must contain lib/, cordis.patch.yml, README files, and LICENSE
 ```
 
-In an isolated DSH `0.1.5-rc.1` or later profile, verify both installation and update behavior:
+In an isolated DSH `0.1.7`-series profile (including `0.1.7-rc.1`), verify both installation and update behavior:
 
 ```sh
 dsh plugin --profile demo add ./dsh-balance-plugin-<version>.tgz

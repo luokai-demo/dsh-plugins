@@ -24,7 +24,7 @@ Shows your DeepSeek account balance as a **card icon + amount** in the sidebar f
 
 ## Install
 
-Requires DeepSeek Harness `0.1.5-rc.1` or later and a DeepSeek account credential. The plugin resolves `DEEPSEEK_API_KEY` through the optional harness credential service (`~/.dsh/.credentials.yaml`) or the environment.
+Requires the DeepSeek Harness `0.1.7` series, including `0.1.7-rc.1`, and a DeepSeek account credential. The package declares this runtime range, so the Harness plugin manager rejects an incompatible DSH version before it can load the plugin. The plugin resolves `DEEPSEEK_API_KEY` through the optional harness credential service (`~/.dsh/.credentials.yaml`) or the environment.
 
 ### From npm (recommended)
 

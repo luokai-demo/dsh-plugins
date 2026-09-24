@@ -1,6 +1,6 @@
 {
   "name": "dsh-balance-plugin",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "DeepSeek wallet-balance readout at the sidebar foot: card icon + amount, status-tinted, refreshed on turn end and on click, with a floating delta animation on change",
   "type": "module",
   "main": "lib/index.js",
@@ -35,13 +35,28 @@
     "test": "node --test tests/*.test.mjs"
   },
   "peerDependencies": {
-    "@deepseek-ai/cordis": "^4.0.2",
-    "@deepseek-ai/schemastery": "^3.18.2",
+    "@deepseek-ai/cordis": "^4.0.4",
+    "@deepseek-ai/dsh": ">=0.1.7-0 <0.1.8-0",
+    "@deepseek-ai/schemastery": "^3.18.4",
     "react": "^18.0.0"
   },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/cordis": {
+      "optional": true
+    },
+    "@deepseek-ai/dsh": {
+      "optional": true
+    },
+    "@deepseek-ai/schemastery": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    }
+  },
   "devDependencies": {
-    "@deepseek-ai/cordis": "^4.0.2",
-    "@deepseek-ai/schemastery": "^3.18.2",
+    "@deepseek-ai/cordis": "^4.0.4",
+    "@deepseek-ai/schemastery": "^3.18.4",
     "@types/react": "^18.0.0",
     "esbuild": "^0.25.0",
     "react": "^18.0.0",

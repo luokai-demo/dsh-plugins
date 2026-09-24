@@ -34,7 +34,7 @@ Restart `dsh web` and refresh the browser — the balance appears at the sidebar
 
 ## Update
 
-The plugin requires DeepSeek Harness `0.1.5-rc.1` or later. For an existing npm install:
+The plugin requires the DeepSeek Harness `0.1.7` series, including `0.1.7-rc.1`. For an existing npm install:
 
 ```sh
 dsh plugin --profile web update dsh-balance-plugin
